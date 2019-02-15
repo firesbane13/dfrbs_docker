@@ -1,0 +1,14 @@
+version: '2.0'
+
+services:
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+
+    docker_test:
+        image: docker_test
+        environment:
+            - VIRTUAL_HOST=docker_test.mocodev.local
