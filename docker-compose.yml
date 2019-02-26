@@ -1,14 +1,28 @@
 version: '2.0'
 
+# Not currently being used
+
 services:
     nginx-proxy:
         image: jwilder/nginx-proxy
-        ports:
-            - "80:80"
+        container_name: ngnix-proxy
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
+        ports:
+            - "80:80"
+            - "443:443"
 
     docker_test:
         image: docker_test
         environment:
-            - VIRTUAL_HOST=docker_test.mocodev.local
+            - VIRTUAL_HOST=docker-test.mocodev.local
+
+    eero:
+        image: docker_test
+        environment:
+            - VIRTUAL_HOST=eero.mocodev.local
+
+    noon:
+        image: docker_test
+        environment:
+            - VIRTUAL_HOST=noon.mocodev.local

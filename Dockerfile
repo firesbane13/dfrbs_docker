@@ -47,9 +47,10 @@ env APACHE_LOG_DIR      /var/log/apache2
 # Expose apache
 EXPOSE 80
 
-ADD . /var/www/html/site
-WORKDIR /var/www/html/site
-RUN chown -R www-data .
+# Need to build code into the container
+# ADD . /var/www/html/site
+# WORKDIR /var/www/html/site
+# RUN chown -R www-data .
 
 ADD apache2/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 
