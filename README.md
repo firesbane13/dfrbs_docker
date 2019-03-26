@@ -41,6 +41,9 @@ docker ps --filter "status=exited" | grep 'weeks ago' | awk '{print $1}' | xargs
 
 docker build .
 
+### Connect to Docker Container
+docker exec -it <container_id> /bin/bash
+
 ### Docker Remove All Containers
 
 docker rm $(docker ps -a -q)
