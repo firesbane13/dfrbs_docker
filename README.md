@@ -29,10 +29,26 @@ sudo docker build -t <docker_image_tag> .
 //
 // Ex. sudo docker -D run -d -t -p 8083:80 docker_test
 
-// Run in project root directory
-docker run -e VIRTUAL_HOST=docker-test.mocodev.local -d --mount type=bind,source="$(pwd)",target=/var/www/html/site <docker_image>
+// Create network bridge
+docker network create -d bridge <bridge_name> \
+    --opt com.docker.network.bridge.default_bridge=true \
+    --opt com.docker.network.bridge.enable_icc=true \
+    --opt com.docker.network.bridge.host_binding_ipv4=0.0.0.0 \
+    --opt com.docker.network.bridge.name=<bridge_name> \
+    --opt com.docker.network.driver.mtu=1500
 
-Ex. docker run -e VIRTUAL_HOST=docker-test.mocodev.local -d --mount type=bind,source="$(pwd)",target=/var/www/html/site ae7eeadd8cd0
+Ex.
+docker network create -d bridge sso_bridge \
+    --opt com.docker.network.bridge.default_bridge=true \
+    --opt com.docker.network.bridge.enable_icc=true \
+    --opt com.docker.network.bridge.host_binding_ipv4=0.0.0.0 \
+    --opt com.docker.network.bridge.name=sso_bridge \
+    --opt com.docker.network.driver.mtu=1500
+
+// Run in project root directory
+docker run --rm --network=<bridge_name> --name=<server_name> -e VIRTUAL_HOST=<desired_url> -d --mount type=bind,source="$(pwd)",target=/var/www/html/site <docker_image>
+
+Ex. docker run --rm --network=sso_bridge --name=docker-test -e VIRTUAL_HOST=docker-test.mocodev.local -d --mount type=bind,source="$(pwd)",target=/var/www/html/site ae7eeadd8cd0
 
 ### Clean up exited containers
 docker ps --filter "status=exited" | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
