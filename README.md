@@ -34,7 +34,6 @@ docker network create -d bridge <bridge_name> \
     --opt com.docker.network.bridge.default_bridge=true \
     --opt com.docker.network.bridge.enable_icc=true \
     --opt com.docker.network.bridge.host_binding_ipv4=0.0.0.0 \
-    --opt com.docker.network.bridge.name=<bridge_name> \
     --opt com.docker.network.driver.mtu=1500
 
 Ex.
@@ -42,7 +41,6 @@ docker network create -d bridge sso_bridge \
     --opt com.docker.network.bridge.default_bridge=true \
     --opt com.docker.network.bridge.enable_icc=true \
     --opt com.docker.network.bridge.host_binding_ipv4=0.0.0.0 \
-    --opt com.docker.network.bridge.name=sso_bridge \
     --opt com.docker.network.driver.mtu=1500
 
 // Run in project root directory
@@ -67,3 +65,6 @@ docker rm $(docker ps -a -q)
 ### Docker Remove All Images
 
 docker rmi $(docker images -a -q)
+
+### Docker List Network Configuration
+docker network inspect bridge docker_default host none
