@@ -22,6 +22,7 @@ RUN DEBIAN_FRONTEND=noninterative \
                        php7.2-curl \
                        php-mcrypt \
                        php7.2-dom \
+                       php7.2-mbstring \
                        supervisor \
                        unzip
 
